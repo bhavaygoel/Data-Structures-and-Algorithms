@@ -3,27 +3,25 @@ public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
         vector<vector<pair<int,int>>> adj(n);
         for(auto& it: flights){
-            adj[it[0]].push_back({it[1], it[2]});
+            adj[it[0]].push_back({it[1],it[2]});
         }
-        vector<int> dist(n, INT_MAX);
-        queue<pair<int,int>> q;
-        q.push({src, 0});
-        int stops =0;
-        while(!q.empty() && stops <= k){
-            int level = q.size();
-            while(level--){
-                auto [node, distance] = q.front();
-                q.pop();
-                for(auto& [adjNode, price]: adj[node]){
-                    if(price+distance < dist[adjNode]){
-                        dist[adjNode] = price + distance;
-                        q.push({adjNode, dist[adjNode]});
-                    }
-                }
+        vector<int> stops(n, INT_MAX);
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> minh;
+        minh.push({0, src, 0});
+
+        while(!minh.empty()){
+            auto vec = minh.top();
+            minh.pop();
+            int dist = vec[0];
+            int node = vec[1];
+            int steps = vec[2];
+            if (steps > stops[node] || steps > k+1) continue;
+            stops[node] = steps;
+            if (node == dst) return dist;
+            for(auto& [adjNode, price] : adj[node]){
+                minh.push({dist+price, adjNode, steps+1});
             }
-            stops++;
         }
-        if(dist[dst] == INT_MAX) return -1;
-        return dist[dst];
+    return -1;
     }
 };
