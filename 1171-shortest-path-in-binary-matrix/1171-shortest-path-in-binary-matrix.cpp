@@ -4,6 +4,7 @@ public:
         int n = grid.size();
         queue<pair<pair<int, int>, int>> q;
         // { {r, c}, len}
+        if(grid[0][0]) return -1;
         q.push({{0, 0}, 1});
         vector<vector<int>> vis(n, vector<int>(n, 0));
         vis[0][0] = 1;
@@ -12,9 +13,6 @@ public:
             int col = q.front().first.second;
             int len = q.front().second;
             q.pop();
-            if (grid[row][col]) {
-                continue;
-            }
             if (row == n - 1 && col == n - 1) {
                 return len;
             }
