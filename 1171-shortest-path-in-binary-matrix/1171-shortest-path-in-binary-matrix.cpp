@@ -1,9 +1,3 @@
-#include <vector>
-#include <queue>
-#include <unordered_set>
-
-using namespace std;
-
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
@@ -11,8 +5,8 @@ public:
         queue<pair<pair<int, int>, int>> q;
         // { {r, c}, len}
         q.push({{0, 0}, 1});
-        set<pair<int, int>> vis;
-        vis.insert({0, 0});
+        vector<vector<int>> vis(n, vector<int>(n, 0));
+        vis[0][0] = 1;
         while (!q.empty()) {
             int row = q.front().first.first;
             int col = q.front().first.second;
@@ -30,10 +24,10 @@ public:
                 int newRow = row + dr[i];
                 int newCol = col + dc[i];
                 if (newRow >= 0 && newRow < n && newCol >= 0 &&
-                     newCol < n && vis.find({newRow, newCol}) == vis.end()
-                         && grid[newRow][newCol] == 0) {
+                     newCol < n && !vis[newRow][newCol]
+                         && !grid[newRow][newCol]) {
                     q.push({{newRow, newCol}, len + 1});
-                    vis.insert({newRow, newCol});
+                    vis[newRow][newCol] = 1;
                 }
             }
         }
