@@ -17,8 +17,7 @@ public:
             auto [dis, node] = minh.top();
             minh.pop();
 
-            for(auto it: adj[node]){
-                auto [adjNode, wt] = it;
+            for(auto [adjNode, wt]: adj[node]){
                 if(dis+wt < dist[adjNode]){
                     ways[adjNode] = ways[node];
                     dist[adjNode] = dis + wt;
