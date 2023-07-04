@@ -4,31 +4,66 @@ using namespace std;
 
 // } Driver Code Ends
 
-class Solution
-{
+class DisjointSet{
+    vector<int> size, parent;
+public:
+    DisjointSet(int n){
+        parent.resize(n);
+        size.resize(n);
+        for(int i=0; i<n; i++){
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+    
+    int parentF(int node){
+        if(node == parent[node]) return node;
+        
+        return parent[node] = parentF(parent[node]);
+    }
+    
+    void unionS(int u, int v){
+        int up = parentF(u);
+        int vp = parentF(v);
+        if(up == vp) return;
+        if(up < vp){
+            parent[up] = vp;
+            size[vp] += size[up];
+        }
+        else{
+            parent[vp] = up;
+            size[up] += size[vp];
+        }
+    }
+};
+
+class Solution{
+
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
         // code here
-        vector<int> vis(V, 0);
-        priority_queue<pair<int,int>, vector<pair<int, int>>, greater<pair<int,int>>> minh;
-        minh.push({0,0});
-        int sum = 0;
-        while(!minh.empty()){
-            auto it = minh.top();
-            int wt = it.first;
-            int node = it.second;
-            minh.pop();
-            if(vis[node]) continue;
-            vis[node] = 1;
-            sum += wt;
-            for(auto it: adj[node]){
+        vector<pair<int, pair<int, int>>> edges;
+        for(int i=0; i<V; i++){
+            for(auto it: adj[i]){
                 int adjNode = it[0];
-                int edW = it[1];
-                if(!vis[adjNode]){
-                    minh.push({edW, adjNode});
-                }
+                int wt = it[1];
+                int node = i;
+                edges.push_back({wt, {node, adjNode}});
+            }
+        }
+        sort(edges.begin(), edges.end());
+        int sum = 0;
+        DisjointSet ds(V);
+        for(auto it: edges){
+            int wt = it.first;
+            int u = it.second.first;
+            int v = it.second.second;
+            
+            if(ds.parentF(u) != ds.parentF(v)){
+                sum += wt;
+                ds.unionS(u,v);
             }
         }
         return sum;
