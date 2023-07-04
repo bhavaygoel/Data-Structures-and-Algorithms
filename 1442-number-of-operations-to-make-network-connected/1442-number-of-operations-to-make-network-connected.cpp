@@ -34,6 +34,9 @@ public:
 class Solution {
 public:
     int makeConnected(int n, vector<vector<int>>& edges) {
+        if (edges.size() < n - 1) {
+            return -1;
+        }
         DisjointSet ds(n);
         int extra = 0;
         for(auto it: edges){
@@ -53,7 +56,6 @@ public:
             }
         }
         int ans = comp - 1;
-        if(ans <= extra) return ans;
-        return -1;
+        return ans;
     }
 };
