@@ -1,27 +1,28 @@
 class Solution {
 public:
-    bool canFinish(int n, vector<vector<int>>& adj) {
-        vector<int> indegree(n, 0);
-        vector<vector<int>> prerequisites(n);
-        for (auto prerequisite : adj) {
-            prerequisites[prerequisite[1]].push_back(prerequisite[0]);
-            indegree[prerequisite[0]]++;
-        }
-        queue<int> q;
-        for(int i=0; i<n; i++){
-            if(!indegree[i]) q.push(i);
-        }
-        int count =0;
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            count++;
-            for(auto it: prerequisites[node]){
-                indegree[it]--;
-                if(!indegree[it]) q.push(it);
+    bool iscycle(vector<int> adj[],vector<int> &vis,int id){
+        if(vis[id]==1)
+            return true;
+        if(vis[id]==0){
+            vis[id]=1;
+            for(auto edge : adj[id]){
+                if(iscycle(adj,vis,edge))
+                    return true;
             }
         }
-        if(count == n) return true;
+        vis[id] = 2;
         return false;
+    }
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        vector<int> adj[n];
+        for(auto edge : pre)
+            adj[edge[1]].push_back(edge[0]);
+        vector<int> vis(n,0);
+        
+        for(int i=0;i<n;i++){
+            if(iscycle(adj,vis,i))
+                return false;
+        }
+        return true;
     }
 };
