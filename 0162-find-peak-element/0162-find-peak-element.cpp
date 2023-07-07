@@ -15,14 +15,12 @@ public:
                 else end = mid-1;
             }
             else if(mid == 0){
-                if(nums[0] > nums[1]){
-                    return 0;
-                }
-                else return 1;
+                if(nums[0] > nums[1])return 0;
+                return 1;
             }
             else{
                 if(nums[nums.size()-1] > nums[nums.size()-2]) return mid;
-                else return nums.size()-2;
+                return nums.size()-2;
             }
         }
         return -1;
