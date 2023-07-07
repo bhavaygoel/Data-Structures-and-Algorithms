@@ -1,6 +1,7 @@
 class Solution {
 public:
     char nextGreatestLetter(vector<char>& letters, char target) {
+        if (letters.back() <= target) return letters.front();
         int start =0, end = letters.size()-1, mid;
         char ans = letters[0];
         while(start <= end){
