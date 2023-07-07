@@ -12,10 +12,10 @@ public:
     }
 
     int Giveindex(vector<int> m, int target, bool(Startingindex)){
-        int s=0, ans=-1;
+        int s=0, ans=-1, mid;
         int e= m.size()-1;
         while(s<=e){
-            int mid = s + (e-s)/2;
+            mid = s + (e-s)/2;
             if(target< m[mid]){
                 e= mid-1;
             }
