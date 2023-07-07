@@ -1,39 +1,29 @@
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        int end;
-        int start = Giveindex(nums, target, true);
-        if(start != -1){
-            end = Giveindex(nums, target, false);
-        }else{
-            return {-1, -1};
-        }
-        return {start, end};
-    }
-
-    int Giveindex(vector<int> m, int target, bool(Startingindex)){
-        int s=0, ans=-1, mid;
-        int e= m.size()-1;
-        while(s<=e){
+    int binaryS(vector<int>& nums, int target, bool start){
+        int s=0, e= nums.size()-1, mid, ans = -1;
+        while(s<= e){
             mid = s + (e-s)/2;
-            if(target< m[mid]){
-                e= mid-1;
-            }
-            if (target > m[mid]){
-                s = mid+1;
-            }
-            if(target == m[mid]){
-                if(Startingindex){
-                    e= mid-1;
-                    ans = mid;
+            if(nums[mid] == target){
+                ans = mid;
+                if(start){
+                    e = mid-1;
                 }
-                else{
-                    s = mid+1;
-                    ans=mid;
-                }
+                else s = mid+1;
             }
-            
+            else if(nums[mid] < target){
+                s = mid + 1;
+            }
+            else{
+                e = mid-1;
+            }
         }
         return ans;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int end = -1;
+        int start = binaryS(nums, target, true);
+        if(start != -1) end = binaryS(nums, target, false);
+        return {start, end};
     }
 };
