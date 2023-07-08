@@ -1,9 +1,8 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        if(x < 1) return 0;
         int start = 1, end=x, mid;
-        int ans;
+        int ans=0;
         while(start <= end){
             mid = start + (end-start)/2;
             if(mid <= x/mid){
