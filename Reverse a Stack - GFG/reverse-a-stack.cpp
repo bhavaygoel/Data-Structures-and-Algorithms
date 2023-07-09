@@ -21,7 +21,7 @@ public:
     s.push(val);
     }
     void Reverse(stack<int> &v){
-    if(v.size() == 0) return;
+    if(v.size() <= 1) return;
     int temp = v.top();
     v.pop();
     Reverse(v);
