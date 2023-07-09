@@ -19,7 +19,8 @@ public:
     vector<string> permutation(string S){
         // Code Here
         vector<string> ans;
-        string p = string(1, S[0]);
+        string p = "";
+        p += S[0];
         helper(p, S.substr(1), ans);
         return ans;
     }
