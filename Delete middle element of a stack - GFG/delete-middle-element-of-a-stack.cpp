@@ -12,7 +12,6 @@ class Solution
     public:
     //Function to delete middle element of a stack.
     void helper(stack<int>& s, int middle){
-        if(s.size() == 0) return;
         if(s.size() == middle){
             s.pop();
             return;
