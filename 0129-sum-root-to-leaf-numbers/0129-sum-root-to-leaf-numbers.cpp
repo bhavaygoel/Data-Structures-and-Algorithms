@@ -15,7 +15,6 @@ public:
         num = num*10 + root->val;
         if(!root->left && !root->right){
             temp.push_back(num);
-            // num /= 10;
             return;
         }
         if(root->left) dfs(root->left, num, temp);
@@ -29,7 +28,6 @@ public:
         int ans=0;
         for(auto& it: temp){
             ans += it;
-            cout << it << " ";
         }
         return ans;
     }
