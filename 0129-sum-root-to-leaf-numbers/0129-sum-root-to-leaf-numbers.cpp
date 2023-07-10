@@ -12,13 +12,12 @@
 class Solution {
 public:
     void dfs(TreeNode* root,int num, vector<int>& temp){
+        num = num*10 + root->val;
         if(!root->left && !root->right){
-            num = num*10 + root->val;
             temp.push_back(num);
-            num /= 10;
+            // num /= 10;
             return;
         }
-        num = num*10 + root->val;
         if(root->left) dfs(root->left, num, temp);
         if(root->right) dfs(root->right, num, temp);
         num /= 10;
