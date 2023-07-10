@@ -11,24 +11,30 @@
  */
 class Solution {
 public:
-    void dfs(TreeNode* root,int num, vector<int>& temp){
-        num = num*10 + root->val;
-        if(!root->left && !root->right){
-            temp.push_back(num);
-            return;
-        }
-        if(root->left) dfs(root->left, num, temp);
-        if(root->right) dfs(root->right, num, temp);
-        num /= 10;
-    }
     int sumNumbers(TreeNode* root) {
-        vector<int> temp;
-        int num=0;
-        dfs(root, num, temp);
-        int ans=0;
-        for(auto& it: temp){
-            ans += it;
+        int sum = 0, cur = 0, depth = 0;
+        while(root) {
+            if(root -> left) {
+                auto pre = root -> left;
+                depth = 1;
+                while(pre -> right && pre -> right != root) 
+                    pre = pre -> right, depth++;
+                if(!pre -> right) {
+                    pre -> right = root;
+                    cur = cur * 10 + root -> val;
+                    root = root -> left;
+                } else {
+                    pre -> right = nullptr;
+                    if(!pre -> left) sum += cur;
+                    cur /= pow(10, depth);
+                    root = root -> right;
+                }
+            } else {
+                cur = cur * 10 + root -> val;
+                if(!root -> right) sum += cur;
+                root = root -> right;
+            }
         }
-        return ans;
+        return sum;
     }
 };
