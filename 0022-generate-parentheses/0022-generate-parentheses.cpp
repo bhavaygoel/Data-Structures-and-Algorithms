@@ -3,7 +3,7 @@ public:
     vector<string> generateParenthesis(int n) {
         vector<string> ans;
         string s;
-        helper(ans,s,0,0, n);
+        helper(ans,s,n,n, n);
         return ans;
     }
     void helper(vector<string>& ans, string& s, int left, int right, int n){
@@ -11,14 +11,14 @@ public:
             ans.push_back(s);
             return;
         }
-        if(left < n){
+        if(left > 0){
             s += '(';
-            helper(ans,s,left+1,right,n);
+            helper(ans,s,left-1,right,n);
             s.pop_back();
         }
-        if(left > right){
+        if(left < right){
             s += ')';
-            helper(ans,s,left,right+1,n);
+            helper(ans,s,left,right-1,n);
             s.pop_back();
         }
     }
