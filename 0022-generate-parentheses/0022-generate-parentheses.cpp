@@ -7,7 +7,7 @@ public:
         return ans;
     }
     void helper(vector<string>& ans, string& s, int left, int right, int n){
-        if(s.length() == 2*n){
+        if(left == 0 && right ==0){
             ans.push_back(s);
             return;
         }
