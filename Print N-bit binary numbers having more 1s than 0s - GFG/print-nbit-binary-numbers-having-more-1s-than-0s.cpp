@@ -12,20 +12,19 @@ public:
             ans.push_back(op);
             return;
         }
+            N--;
         // if(one >= zero){
             op += '1';
-            N--;
             helper(op, one+1, zero, ans, N);
             op.pop_back();
-            N++;
         // }
         if(zero < one){
             op += '0';
-            N--;
+            // N--;
             helper(op, one, zero+1, ans, N);
             op.pop_back();
-            N++;
         }
+            N++;
         // op.pop_back();
     }
 	vector<string> NBitBinary(int N)
