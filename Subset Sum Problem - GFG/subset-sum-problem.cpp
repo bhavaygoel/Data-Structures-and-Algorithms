@@ -9,23 +9,10 @@ using namespace std;
 
 class Solution{   
 public:
-    bool helper(vector<int>& arr, int n, int sum, vector<vector<int>>& t){
-        if(sum == 0) return 1;
-        if(n <= 0) return 0;
-        if(t[n][sum] != -1) return t[n][sum];
-        
-        if(arr[n-1] <= sum){
-            t[n][sum] = helper(arr, n-1, sum-arr[n-1], t) || helper(arr, n-1, sum, t);
-        }
-        else 
-            t[n][sum] = helper(arr, n-1, sum, t);
-        return t[n][sum];
-    }
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         vector<vector<int>> t(arr.size()+1, vector<int>(sum+1, -1));
         int n = arr.size();
-        // return helper(arr, n, sum, t);
         for(int j=0; j<sum+1; j++) t[0][j] = 0;
         for(int i=0; i< n+1; i++) t[i][0] = 1;
         for(int i=1; i< n+1; i++){
