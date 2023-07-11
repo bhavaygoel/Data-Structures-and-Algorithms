@@ -8,26 +8,36 @@ class Solution
 {
     public:
     //Function to return max value that can be put in knapsack of capacity W.
-    int helper(int W, int wt[], int val[], int n, vector<vector<int>>& t){
-        if(n == 0 || W == 0) return 0;
-        if(t[n][W] != -1){
-            return t[n][W];
-        }
-        if(wt[n-1] <= W){
+    // int helper(int W, int wt[], int val[], int n, vector<vector<int>>& t){
+    //     if(n == 0 || W == 0) return 0;
+    //     if(t[n][W] != -1){
+    //         return t[n][W];
+    //     }
+    //     if(wt[n-1] <= W){
            
-           t[n][W] =  max(val[n-1] + helper(W - wt[n-1], wt, val, n-1, t),
-                        helper(W, wt, val, n-1, t));
-       }
-       else{
-           t[n][W] =  helper(W, wt, val, n-1, t);
-       }
-       return t[n][W];
-    }
+    //       t[n][W] =  max(val[n-1] + helper(W - wt[n-1], wt, val, n-1, t),
+    //                     helper(W, wt, val, n-1, t));
+    //   }
+    //   else{
+    //       t[n][W] =  helper(W, wt, val, n-1, t);
+    //   }
+    //   return t[n][W];
+    // }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
        // Your code here
        vector<vector<int>> t(n+1, vector<int>(W+1, -1));
-       return helper(W, wt, val, n, t);
+       for(int i=0; i<n+1; i++) t[i][0] = 0;
+       for(int j=0; j<W+1; j++) t[0][j] = 0;
+       for(int i=1; i<n+1; i++){
+           for(int j=1; j<W+1; j++){
+               if(wt[i-1] <= j){
+                   t[i][j] = max(val[i-1] + t[i-1][j - wt[i-1]],t[i-1][j]);
+               }
+               else t[i][j] = t[i-1][j];
+           }
+       }
+       return t[n][W];
     }
 };
 
