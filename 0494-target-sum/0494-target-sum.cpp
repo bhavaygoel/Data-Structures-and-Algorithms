@@ -11,9 +11,7 @@ public:
             return t[index][total + curr];
         }
         int val = nums[index];
-        int add= helper(nums, target, curr+val, index+1, t, total);
-        int sub = helper(nums, target, curr-val, index+1, t, total);
-        t[index][total+curr] = add + sub;
+       t[index][total+curr] =  helper(nums, target, curr+val, index+1, t, total)+ helper(nums, target, curr-val, index+1, t, total);
         return t[index][total+curr];
     }
     int findTargetSumWays(vector<int>& nums, int target) {
@@ -23,5 +21,6 @@ public:
         }
         vector<vector<int>> t(nums.size()+1, vector<int>(2*total+1, -1));
         return helper(nums, target, 0, 0, t, total);
+
     }
 };
