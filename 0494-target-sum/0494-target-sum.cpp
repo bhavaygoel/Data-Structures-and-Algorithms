@@ -1,19 +1,27 @@
 class Solution {
 public:
-    void helper(vector<int>& nums, int target, int& ans, int curr, int index){
+    int helper(vector<int>& nums, int target, int curr, int index, vector<vector<int>>& t, int total){
         if(index >= nums.size()) {
             if(curr == target){
-                ans++;
+                return 1;
             }
-            return;
+            return 0;
+        }
+        if(t[index][total + curr] != -1){
+            return t[index][total + curr];
         }
         int val = nums[index];
-        helper(nums, target, ans, curr+val, index+1);
-        helper(nums, target, ans, curr-val, index+1);
+        int add= helper(nums, target, curr+val, index+1, t, total);
+        int sub = helper(nums, target, curr-val, index+1, t, total);
+        t[index][total+curr] = add + sub;
+        return t[index][total+curr];
     }
     int findTargetSumWays(vector<int>& nums, int target) {
-        int ans=0;
-        helper(nums, target, ans, 0, 0);
-        return ans;
+        int total=0;
+        for(auto& it: nums){
+            total += it;
+        }
+        vector<vector<int>> t(nums.size()+1, vector<int>(2*total+1, -1));
+        return helper(nums, target, 0, 0, t, total);
     }
 };
