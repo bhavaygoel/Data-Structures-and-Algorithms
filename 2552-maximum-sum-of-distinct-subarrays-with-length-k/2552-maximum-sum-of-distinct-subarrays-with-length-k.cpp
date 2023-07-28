@@ -2,7 +2,7 @@ class Solution {
 public:
     long long maximumSubarraySum(vector<int>& nums, int k) {
         int i=0, j=0, n=nums.size();
-        long long sum=0, ans=-1;
+        long long sum=0, ans= 0;
         unordered_map<int, int> m;
         while(j < n){
             sum += nums[j];
@@ -19,6 +19,6 @@ public:
                 i++;j++;
             }
         }
-        return ans == -1 ? 0 : ans;
+        return ans;
     }
 };
