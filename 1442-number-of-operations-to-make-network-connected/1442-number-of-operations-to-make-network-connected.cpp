@@ -38,14 +38,10 @@ public:
             return -1;
         }
         DisjointSet ds(n);
-        // int extra = 0;
         for(auto it: edges){
             int u = it[0];
             int v = it[1];
-            if(ds.findParent(u) == ds.findParent(v)){
-                // extra++;
-            }
-            else{
+            if(ds.findParent(u) != ds.findParent(v)){
                 ds.unionS(u, v);
             }
         }
