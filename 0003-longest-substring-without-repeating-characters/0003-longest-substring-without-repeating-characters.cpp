@@ -6,16 +6,13 @@ public:
         unordered_map<int, int> m;
         while(j < n){
             m[s[j]]++;
-            if(m[s[j]] == 1){
-                count++;
-            }
-            if(j-i+1 == count){
+            if(j-i+1 == m.size()){
                 ans = max(ans, j-i+1);
             }
-            while(j-i+1 > count){
+            while(j-i+1 > m.size()){
                 m[s[i]]--;
                 if(m[s[i]] == 0){
-                    count--;
+                    m.erase(s[i]);
                 }
                 i++;
             }
