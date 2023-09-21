@@ -1,29 +1,34 @@
 class Solution {
 public:
-    int binaryS(vector<int>& nums, int target, bool start){
-        int s=0, e= nums.size()-1, mid, ans = -1;
-        while(s<= e){
-            mid = s + (e-s)/2;
-            if(nums[mid] == target){
-                ans = mid;
-                if(start){
-                    e = mid-1;
-                }
-                else s = mid+1;
+    vector<int> searchRange(vector<int>& arr, int x) {
+        int start=-1,end=-1, n=arr.size();
+        int l=0, r=n-1;
+        while(l <= r){
+            int mid = l + (r-l)/2;
+            if(arr[mid] == x){
+                end = mid;
+                l = mid+1;
             }
-            else if(nums[mid] < target){
-                s = mid + 1;
+            else if(arr[mid] < x){
+                l = mid+1;
             }
-            else{
-                e = mid-1;
-            }
+            else
+                r = mid-1;
         }
-        return ans;
-    }
-    vector<int> searchRange(vector<int>& nums, int target) {
-        int end = -1;
-        int start = binaryS(nums, target, true);
-        if(start != -1) end = binaryS(nums, target, false);
+        l=0;
+        r=n-1;
+        while(l <= r){
+            int mid = l + (r-l)/2;
+            if(arr[mid] == x){
+                start = mid;
+                r = mid-1;
+            }
+            else if(arr[mid] < x){
+                l = mid+1;
+            }
+            else
+                r = mid-1;
+        }
         return {start, end};
     }
 };
