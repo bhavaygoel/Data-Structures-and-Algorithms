@@ -28,7 +28,7 @@ public:
                 if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
-            ans.push_back(sum/level.size());
+            ans.push_back(sum/size);
         }
         return ans;
     }
