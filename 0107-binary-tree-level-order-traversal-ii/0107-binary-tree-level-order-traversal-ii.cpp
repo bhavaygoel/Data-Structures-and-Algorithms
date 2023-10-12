@@ -11,23 +11,23 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
-        if(!root) return 0;
-        int lh = height(root->left);
-        int rh = height(root->right);
-        return 1 + max(lh, rh);
-    }
-    void helper(TreeNode* root, int level, vector<vector<int>>& ans){
-        if(!root) return;
-        ans[level].push_back(root->val);
-        helper(root->left, level-1, ans);
-        helper(root->right, level-1, ans);
-    }
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        if(!root) return {};
-        int level = height(root);
-        vector<vector<int>> ans(level);
-        helper(root,level-1, ans);
+        vector<vector<int>> ans;
+        if(!root) return ans;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int size = q.size();
+            vector<int> level;
+            for(int i=0; i<size; i++){
+                TreeNode* node = q.front();
+                if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
+                level.push_back(node->val);
+                q.pop();
+            }
+            ans.insert(ans.begin(), level);
+        }
         return ans;
     }
 };
