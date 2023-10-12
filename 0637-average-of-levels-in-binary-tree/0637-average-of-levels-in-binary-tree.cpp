@@ -18,15 +18,19 @@ public:
         vector<double> ans;
         while(!q.empty()){
             int size = q.size();
-            long sum = 0;
+            vector<int> level;
             for(int i=0; i<size; i++){
                 TreeNode* node = q.front();
                 q.pop();
-                sum += node->val;
+                level.push_back(node->val);
                 if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
-            ans.push_back((double)sum/size);
+            double sum=0;
+            for(auto it: level){
+                sum += it;
+            }
+            ans.push_back(sum/level.size());
         }
         return ans;
     }
