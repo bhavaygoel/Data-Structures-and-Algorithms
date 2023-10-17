@@ -11,26 +11,20 @@
  */
 class Solution {
 public:
-    void helper(TreeNode* root, queue<TreeNode*>& q){
-        if(root == NULL) return;
-        q.push(root);
-        helper(root->left, q);
-        helper(root->right, q);
-    }
     void flatten(TreeNode* root) {
         if(!root) return;
-        queue<TreeNode*> q;
-        helper(root, q);
-        TreeNode* temp = NULL;
-        while(!q.empty()){
-            if(temp){
-                temp->right = q.front();
-                temp->left = NULL;
-                temp = temp->right;
+        TreeNode* curr = root;
+        while(curr){
+            if(curr->left){
+                TreeNode* rightm = curr->left;
+                while(rightm->right){
+                    rightm = rightm->right;
+                }
+                rightm->right = curr->right;
+                curr->right = curr->left;
+                curr->left = NULL;
             }
-            else
-                temp = q.front();
-            q.pop();
+                curr = curr->right;
         }
     }
 };
